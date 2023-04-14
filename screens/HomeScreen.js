@@ -16,6 +16,8 @@ export default function HomeScreen({ handleNavigate }) {
               title={"UNLOCK NOW"}
               backgroundColor="#FF2C84"
               color="#fff"
+              screen="welcome"
+              handleNavigate={handleNavigate}
             ></Button>
           </View>
 
