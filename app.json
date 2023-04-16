@@ -11,9 +11,8 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
+    "permissions": ["CAMERA", "AUDIO_RECORDING", "LOCATION"],
     "ios": {
       "supportsTablet": true
     },

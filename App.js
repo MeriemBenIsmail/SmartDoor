@@ -3,7 +3,7 @@ import { View } from "react-native";
 import HomeScreen from "./screens/HomeScreen";
 import SignInScreen from "./screens/SignInScreen";
 import SignUpScreen from "./screens/SignUpScreen";
-
+import WelcomeScreen from "./screens/WelcomeScreen";
 const App = () => {
   const [screen, setScreen] = React.useState("home");
 
@@ -32,6 +32,13 @@ const App = () => {
           <SignUpScreen
             handleNavigate={handleNavigate}
             onNavigate={() => handleNavigate("signup")}
+          />
+        );
+        case "welcome":
+        return (
+          <WelcomeScreen
+            handleNavigate={handleNavigate}
+            onNavigate={() => handleNavigate("welcome")}
           />
         );
       default:

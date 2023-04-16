@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Button from "../UI/Button";
 
-const SignUpForm = ({handleNavigate}) => {
+const SignInForm = ({handleNavigate}) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SignUpForm;
+export default SignInForm;
