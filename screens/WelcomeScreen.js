@@ -6,10 +6,12 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import Button from "../UI/Button";
 import { Camera } from "expo-camera";
+import * as tf from "@tensorflow/tfjs";
+import * as facemesh from "@tensorflow-models/facemesh";
 
 export default function HomeScreen({ handleNavigate }) {
   const [cameraPermission, setCameraPermission] = useState(null);
@@ -20,7 +22,7 @@ export default function HomeScreen({ handleNavigate }) {
 
   useEffect(() => {
     async function requestCameraPermission() {
-      const { status } = await Camera.requestPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setCameraPermission(status === "granted");
     }
     requestCameraPermission();
@@ -36,8 +38,21 @@ export default function HomeScreen({ handleNavigate }) {
 
   const handleCameraCapture = async () => {
     if (cameraRef) {
-      const photo = await cameraRef.takePictureAsync();
-      console.log(photo.uri);
+      const capturedPhoto = await cameraRef.takePictureAsync();
+      console.log(capturedPhoto.uri);
+      const facemeshModel = await facemesh.load(
+        facemesh.SupportedPackages.mediapipeFacemesh
+      );
+      const imageTensor = tf.browser.fromPixels(capturedPhoto);
+      const predictions = await facemeshModel.estimateFaces(imageTensor);
+      if (predictions.length > 0) {
+        const face = predictions[0].scaledMesh;
+        const nose = face[4];
+        const leftEye = face[362];
+        const rightEye = face[263];
+        const mouth = face[14];
+        console.log(face);
+      }
     }
   };
 
@@ -58,19 +73,14 @@ export default function HomeScreen({ handleNavigate }) {
                 type={type}
               >
                 <View style={styles.cameraButtonContainer}>
-                  <TouchableOpacity
-                    onPress={handleCameraCapture}
-                  >
+                  <TouchableOpacity onPress={handleCameraCapture}>
                     <Text style={styles.cameraButtonText}>FaceID</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={handleCameraClose}
-                  >
+                  <TouchableOpacity onPress={handleCameraClose}>
                     <Text style={styles.cameraButtonText}>close</Text>
                   </TouchableOpacity>
                 </View>
               </Camera>
-             
             </View>
           ) : (
             <View>
@@ -125,13 +135,13 @@ const styles = StyleSheet.create({
     marginBottom: 13,
   },
   cameraButtonContainer: {
-    flexDirection:'row',
-    justifyContent:'space-between',
-    padding:20
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 20,
   },
   cameraButtonText: {
-    color:"#fff",
-    fontSize:23,
-    fontWeight:600
-  }
+    color: "#fff",
+    fontSize: 23,
+    fontWeight: 600,
+  },
 });

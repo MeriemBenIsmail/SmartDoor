@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^18.0.1",
+    "@tensorflow-models/face-landmarks-detection": "^0.0.1",
+    "@tensorflow-models/facemesh": "^0.0.5",
+    "@tensorflow/tfjs": "^3.8.0",
     "expo": "~48.0.10",
     "expo-camera": "~13.2.1",
     "expo-font": "^11.1.1",
