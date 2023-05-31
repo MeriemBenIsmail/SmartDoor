@@ -14,7 +14,7 @@ import { Audio } from 'expo-av';
 
 
 
-export default function HomeScreen({ handleNavigate }) {
+export default function UploadScreen({ handleNavigate }) {
   const [cameraPermission, setCameraPermission] = useState(null);
   const [showCamera, setShowCamera] = useState(false);
   const [capturedPhotoUri, setCapturedPhotoUri] = useState(null);
@@ -22,6 +22,7 @@ export default function HomeScreen({ handleNavigate }) {
   let cameraRef = null;
   const { width, height } = Dimensions.get("window");
   const [recording, setRecording] = useState(null);
+  const [stoprecord, setStoprecord] = useState(false);
 
 
   useEffect(() => {
@@ -46,8 +47,9 @@ export default function HomeScreen({ handleNavigate }) {
   
   const handleCameraCapture = async () => {
     if (cameraRef) {
-      const photo = await cameraRef.takePictureAsync();
-      console.log(photo.uri);
+      const { uri } = await cameraRef.takePictureAsync();
+      setI(1);
+      setCapturedPhotoUri(uri);
     }
   };
   const handleStartRecording = async () => {
@@ -78,6 +80,10 @@ export default function HomeScreen({ handleNavigate }) {
       name: 'photo.jpg'
     });
   };
+  const handleRestartRecording = () => {
+    setStoprecord(false);
+    setRecording(null);
+  };
 
   const handleStopRecording = async () => {
     try {
@@ -88,13 +94,17 @@ export default function HomeScreen({ handleNavigate }) {
       setRecording(null);
       console.log('Recording stopped');
       console.log(uri);
-
+      setStoprecord(true);
    
   } catch (error) {
     console.error('Failed to stop recording', error);
   }
   };
-  
+  const handleUploadRecording = () => {
+    handleNavigate("valid");
+   
+  };
+
   return (
     <>
       <ImageBackground
@@ -147,7 +157,7 @@ export default function HomeScreen({ handleNavigate }) {
           ) : (
             <View>
               <View style={styles.div}>
-                <Text style={styles.title}>Face ID</Text>
+                <Text style={styles.title}>Upload photo</Text>
                 <TouchableOpacity onPress={handleClickFaceID}>
                   <Image source={require("../assets/faceID.png")}></Image>
                 </TouchableOpacity>
@@ -162,6 +172,21 @@ export default function HomeScreen({ handleNavigate }) {
                   <Text>Stop Recording</Text>
                  </TouchableOpacity>
                  )}
+                 { stoprecord && (
+                  <>
+                  <View style={styles.voice}>
+                  <TouchableOpacity onPress={handleUploadRecording} style={styles.bouton}>
+                   <Text>Upload</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={handleRestartRecording} style={styles.bouton}>
+                   <Text>RETRY</Text>
+                  </TouchableOpacity>
+                  </View>
+                  </>
+                   
+                  )
+
+                 }
               </View>
               <View style={styles.div}>
                 <Button
@@ -202,6 +227,12 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     textAlign: "center",
     marginBottom: 13,
+  },
+  voice: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: 300,
   },
   bouton: {
     backgroundColor: "#A7AEF9F2",

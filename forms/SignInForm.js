@@ -45,8 +45,13 @@ const SignInForm = ({handleNavigate}) => {
           />
         </View>
         <View style={styles.btns}>
-          <Button backgroundColor="#FF2C84" title="Return" handleNavigate={handleNavigate} screen="home"/>
-          <Button backgroundColor="#FF2C84" title="Next" onPress={handleSubmit} />
+          <Button backgroundColor="#FF2C84" title="Return" handleNavigate={handleNavigate} screen="homepage"/>
+          <Button 
+          backgroundColor="#FF2C84" 
+          title="Next" 
+          handleNavigate={handleNavigate} 
+          screen={email === "admin@gmail.com" ? "admin" : "home"}
+          onPress={handleSubmit} />
         </View>
       </View>
     </TouchableWithoutFeedback>

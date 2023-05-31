@@ -2,13 +2,17 @@ import React from "react";
 import { View } from "react-native";
 import HomeScreen from "./screens/HomeScreen";
 import SignInScreen from "./screens/SignInScreen";
-import SignUpScreen from "./screens/SignUpScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
+import ValidScreen from "./screens/ValidScreen";
+import AdminScreen from "./screens/AdminScreen";
+import UsersListScreen from "./screens/UsersListScreen";
+import HomePageScreen from "./screens/HomePageScreen";
+import UploadScreen from "./screens/UploadScreen";
 import { firebase } from './config';
 
 
 const App = () => {
-  const [screen, setScreen] = React.useState("home");
+  const [screen, setScreen] = React.useState("homepage");
 
   const handleNavigate = (nextScreen) => {
     setScreen(nextScreen);
@@ -48,13 +52,7 @@ const App = () => {
             onNavigate={() => handleNavigate("home")}
           />
         );
-      case "signup":
-        return (
-          <SignUpScreen
-            handleNavigate={handleNavigate}
-            onNavigate={() => handleNavigate("signup")}
-          />
-        );
+      
         case "welcome":
         return (
           <WelcomeScreen
@@ -62,12 +60,47 @@ const App = () => {
             onNavigate={() => handleNavigate("welcome")}
           />
         );
-      default:
+        case "valid":
         return (
-          <HomeScreen
+          <ValidScreen
+            handleNavigate={handleNavigate}
+            onNavigate={() => handleNavigate("valid")}
+          />
+        );
+        case "admin":
+        return (
+          <AdminScreen
+            handleNavigate={handleNavigate}
+            onNavigate={() => handleNavigate("admin")}
+          />
+        );
+        case "list":
+        return (
+          <UsersListScreen
+            handleNavigate={handleNavigate}
+            onNavigate={() => handleNavigate("list")}
+          />
+        );
+        case "homepage":
+        return (
+          <HomePageScreen
             handleNavigate={handleNavigate}
             onNavigate={() => handleNavigate("signin")}
           />
+        );
+        case "upload":
+        return (
+          <UploadScreen
+            handleNavigate={handleNavigate}
+            onNavigate={() => handleNavigate("upload")}
+          />
+        );
+      default:
+        return (
+          <HomePageScreen
+          handleNavigate={handleNavigate}
+          onNavigate={() => handleNavigate("signin")}
+        />
         );
     }
   };

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ImageBackground, Image } from "react-native";
 import Button from "../UI/Button";
 
-export default function HomeScreen({ handleNavigate }) {
+export default function HomePageScreen({ handleNavigate }) {
   return (
     <>
       <ImageBackground
@@ -12,27 +12,15 @@ export default function HomeScreen({ handleNavigate }) {
           <View style={styles.wrapper}>
             <Text style={styles.title}>Welcome to Smart Door</Text>
             <Image source={require("../assets/home.png")}></Image>
+            <View style={{marginTop:90}}>
             <Button
-              title={"UNLOCK NOW"}
+              title={"SIGN IN"}
               backgroundColor="#FF2C84"
               color="#fff"
-              screen="welcome"
+              screen="signin"
               handleNavigate={handleNavigate}
             ></Button>
-          </View>
-
-          <View style={styles.options}>
-            <View style={styles.left}>
-              <Text style={styles.header}>Don't have access yet ?</Text>
-              <Button
-                title={"REGISTER"}
-                screen="upload"
-                backgroundColor="#A7AEF9F5"
-                handleNavigate={handleNavigate}
-                color="#fff"
-              ></Button>
             </View>
-            
           </View>
         </View>
       </ImageBackground>
@@ -55,30 +43,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#FFFFFF",
     textAlign: "center",
-    marginBottom: 13,
-  },
-  subtitle: {
-    fontSize: 24,
-    color: "#FFFFFF",
+    marginBottom: 19,
+    marginTop: 50
   },
   options: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     height: 200,
-  },
-  left: {
-    flex: 1,
-    height: 100,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  right: {
-    flex: 1,
-    height: 100,
-
-    justifyContent: "center",
-    alignItems: "center",
   },
   header: {
     textAlign: "center",
